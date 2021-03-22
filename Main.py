@@ -1,5 +1,7 @@
 from flask import Flask, request
 from handler.PatientHandler import PatientHandler
+from handler.DoctorHandler import DoctorHandler
+from handler.AppointmentHandler import AppointmentHandler
 from flask_cors import CORS
 
 # Activate

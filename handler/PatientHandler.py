@@ -59,7 +59,7 @@ class PatientHandler:
             if patient_firstname and patient_lastname and patient_email and patient_password and patient_birthday and patient_gender and patient_medicalplan and patient_phone:
                 dao = PatientDao.PatientDAO()
                 patient_id = dao.insert(patient_firstname, patient_lastname, patient_email, patient_password, patient_birthday, patient_gender, patient_medicalplan, patient_phone)
-                result = self.build_patient_attributes(patient_id, patient_firstname and patient_lastname and patient_email and patient_password and patient_birthday and patient_gender and patient_medicalplan and patient_phone)
+                result = self.build_patient_attributes(patient_id, patient_firstname, patient_lastname, patient_email, patient_password, patient_birthday, patient_gender, patient_medicalplan, patient_phone)
                 return jsonify(Patient=result), 201
             else:
                 return jsonify(Error="Unexpected attributes in post request"), 400
