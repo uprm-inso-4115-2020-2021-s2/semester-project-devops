@@ -8,7 +8,7 @@ class PatientHandler:
         result['patient_id'] = row[0]
         result['patient_firstname'] = row[1]
         result['patient_lastname'] = row[2]
-        result['[patient_email]'] = row[3]
+        result['patient_email'] = row[3]
         result['patient_password'] = row[4]
         result['patient_birthday'] = row[5]
         result['patient_gender'] = row[6]
@@ -38,7 +38,7 @@ class PatientHandler:
             result_list.append(result)
         return jsonify(Users=result_list)
 
-    def getUserById(self, patient_id):
+    def getPatientById(self, patient_id):
         dao = PatientDao.PatientDAO()
         row = dao.getPatientById(patient_id)
         if not row:

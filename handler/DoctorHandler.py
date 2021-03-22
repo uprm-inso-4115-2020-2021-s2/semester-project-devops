@@ -8,7 +8,7 @@ class DoctorHandler:
         result['doctor_id'] = row[0]
         result['doctor_firstname'] = row[1]
         result['doctor_lastname'] = row[2]
-        result['[doctor_email]'] = row[3]
+        result['doctor_email'] = row[3]
         result['doctor_password'] = row[4]
         result['doctor_specialization'] = row[5]
         result['doctor_location'] = row[6]
@@ -36,7 +36,7 @@ class DoctorHandler:
             result_list.append(result)
         return jsonify(Users=result_list)
 
-    def getUserById(self, doctor_id):
+    def getDoctorById(self, doctor_id):
         dao = DoctorDao.DoctorDAO()
         row = dao.getDoctorById(doctor_id)
         if not row:

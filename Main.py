@@ -30,7 +30,7 @@ def doctors():
         return DoctorHandler().insertDoctorJson(request.json)
     else:
         if not request.args:
-            return DoctorHandler().getAllDoctor()
+            return DoctorHandler().getAllDoctors()
 
 @app.route('/appointment', methods=['GET', 'POST'])
 def appointment():
