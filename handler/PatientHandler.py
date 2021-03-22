@@ -48,14 +48,14 @@ class PatientHandler:
             return jsonify(Patients = patients)
 
     def insertPatientJson(self, json):
-            patient_firstname = json['AccountTypeNumber']
-            patient_lastname = json['FirstName']
-            patient_email = json['LastName']
-            patient_password = json['Phone']
-            patient_birthday = json['Email']
-            patient_gender = json['MajorNumber']
-            patient_medicalplan = json['AboutMe']
-            patient_phone = json['YearofEnrollment']
+            patient_firstname = json['FirstName']
+            patient_lastname = json['LastName']
+            patient_email = json['Email']
+            patient_password = json['Password']
+            patient_birthday = json['Birthday']
+            patient_gender = json['Gander']
+            patient_medicalplan = json['MedicalPlan']
+            patient_phone = json['Phone']
             if patient_firstname and patient_lastname and patient_email and patient_password and patient_birthday and patient_gender and patient_medicalplan and patient_phone:
                 dao = PatientDao.PatientDAO()
                 patient_id = dao.insert(patient_firstname, patient_lastname, patient_email, patient_password, patient_birthday, patient_gender, patient_medicalplan, patient_phone)
@@ -77,14 +77,14 @@ class PatientHandler:
         if not dao.getPatientById(patient_id):
             return jsonify(Error="Admin not found."), 404
         else:
-            patient_firstname = json['AccountTypeNumber']
-            patient_lastname = json['FirstName']
-            patient_email = json['LastName']
-            patient_password = json['Phone']
-            patient_birthday = json['Email']
-            patient_gender = json['MajorNumber']
-            patient_medicalplan = json['AboutMe']
-            patient_phone = json['YearofEnrollment']
+            patient_firstname = json['FirstName']
+            patient_lastname = json['LastName']
+            patient_email = json['Email']
+            patient_password = json['Password']
+            patient_birthday = json['Birthday']
+            patient_gender = json['Gander']
+            patient_medicalplan = json['MedicalPlan']
+            patient_phone = json['Phone']
             if patient_firstname and patient_lastname and patient_email and patient_password and patient_birthday and patient_gender and patient_medicalplan and patient_phone:
                 dao.update(patient_id, patient_firstname, patient_lastname, patient_email, patient_password, patient_birthday, patient_gender, patient_medicalplan, patient_phone)
                 result = self.build_patient_attributes(patient_id, patient_firstname, patient_lastname, patient_email, patient_password, patient_birthday, patient_gender, patient_medicalplan, patient_phone)
