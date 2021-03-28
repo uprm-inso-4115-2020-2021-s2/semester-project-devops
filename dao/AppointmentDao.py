@@ -8,11 +8,10 @@ class AppointmentDAO:
    ##     # connection_url = (host="localhost", user='Argent', passwd='ArgentSable776', db='MatchaWareDB')
    ##     self.conn = connection_url
 
-    ##def __init__(self):
-    ##    connection_url = psycopg2.connect(host='24.54.205.36', user='RemoteMatcha', passwd='RemoteMatcha',
-    ##                                     db='BeyondHorizonsDB', port=6606)
-    ##    ##connection_url = MySQLdb.connect(host="localhost", user='root', passwd='root', db='BeyondHorizonsDB')
-        ##self.conn = connection_url
+    def __init__(self):
+        connection_url = psycopg2.connect(host='database-inso.cm7e4m7oyhhe.us-east-2.rds.amazonaws.com',
+                                          user='backend', password='backend', dbname='postgres', port=5432)
+        self.conn = connection_url
 
     def getAllAppointments(self):
         cursor = self.conn.cursor()

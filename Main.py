@@ -9,7 +9,6 @@ app = Flask(__name__)
 # Apply CORS to this app
 CORS(app)
 
-
 @app.route('/')
 def greeting():
     return 'Hello, this is the DevOps App!'
@@ -40,3 +39,6 @@ def appointment():
     else:
         if not request.args:
             return AppointmentHandler().getAllAppointments()
+
+if __name__ == '__main__':
+    app.run()
