@@ -11,7 +11,7 @@ CORS(app)
 
 @app.route('/')
 def greeting():
-    return 'Hello, this is the DevOps App!'
+    return 'Hello, this is the DevOps App!!'
 
 @app.route('/patients', methods=['GET', 'POST'])
 def patients():

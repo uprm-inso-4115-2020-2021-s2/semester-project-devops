@@ -2,11 +2,6 @@ import psycopg2
 
 
 class AppointmentDAO:
-    # fix this url crap tonight
-   ## def __init__(self):
-   ##     connection_url = MySQLdb.connect(host='24.54.205.36', user='RemoteMatcha', passwd='RemoteMatcha', db='BeyondHorizonsDB',port = 6606)
-   ##     # connection_url = (host="localhost", user='Argent', passwd='ArgentSable776', db='MatchaWareDB')
-   ##     self.conn = connection_url
 
     def __init__(self):
         connection_url = psycopg2.connect(host='database-inso.cm7e4m7oyhhe.us-east-2.rds.amazonaws.com',
