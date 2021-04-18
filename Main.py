@@ -40,5 +40,9 @@ def appointment():
         if not request.args:
             return AppointmentHandler().getAllAppointments()
 
+@app.route('/search/<string:filter>/<string:term>', methods=['GET'])
+def doctorSearch(term, filter):
+    return DoctorHandler().getDoctorBySearch(term,filter)
+
 if __name__ == '__main__':
     app.run()

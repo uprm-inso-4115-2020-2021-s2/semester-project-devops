@@ -1,6 +1,6 @@
 from flask import jsonify
 from dao import DoctorDao
-
+from util import util
 
 class DoctorHandler:
     def build_doctor_dict(self, row):
@@ -13,6 +13,17 @@ class DoctorHandler:
         result['doctor_specialization'] = row[5]
         result['doctor_location'] = row[6]
         result['doctor_phone'] = row[7]
+        return result
+
+    def build_doctor_dict_public(self, row):
+        result = {}
+        result['doctor_firstname'] = row[0]
+        result['doctor_lastname'] = row[1]
+        result['doctor_email'] = row[2]
+        result['doctor_specialization'] = row[3]
+        result['doctor_location'] = row[4]
+        result['doctor_phone'] = row[5]
+        result['doctor_description'] = row[6]
         return result
 
     def build_doctor_attributes(self, doctor_id, doctor_firstname, doctor_lastname, doctor_email, doctor_password, doctor_specialization, doctor_location, doctor_phone):
@@ -44,6 +55,19 @@ class DoctorHandler:
         else:
             doctors = self.build_doctor_dict(row)
             return jsonify(Doctors = doctors)
+    
+    def getDoctorBySearch(self, term, filter):
+        processedTerm = util.Utilities().termProcessing(term)
+        dao = DoctorDao.DoctorDAO()
+        doctor_list = dao.getDoctorBySearch(processedTerm.lower(), filter)
+        result_list = []
+        if not doctor_list:
+            return jsonify(Error = "No doctors meet search criteria"), 404
+        else:
+            for row in doctor_list:
+                result = self.build_doctor_dict_public(row)
+                result_list.append(result)
+            return jsonify(Doctors = result_list)
 
     def insertDoctorJson(self, json):
             doctor_firstname = json['FirstName']

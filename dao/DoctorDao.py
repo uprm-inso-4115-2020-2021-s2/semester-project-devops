@@ -24,6 +24,25 @@ class DoctorDAO:
         result = cursor.fetchone()
         return result
 
+    def getDoctorBySearch(self, term, filter):
+        liketerm = '%' + term + '%'
+        cursor = self.conn.cursor()
+        if (filter== "location"):
+            query = "select doctor_firstname,doctor_lastname,doctor_email,doctor_specialization,doctor_location,doctor_phone,doctor_description from Doctor Where LOWER(doctor_location) LIKE %s;"
+        elif (filter == "specialization"):
+            query = "select doctor_firstname,doctor_lastname,doctor_email,doctor_specialization,doctor_location,doctor_phone,doctor_description from Doctor Where LOWER(doctor_specialization) LIKE %s;"
+        elif (filter == "lastname"):
+            query = "select doctor_firstname,doctor_lastname,doctor_email,doctor_specialization,doctor_location,doctor_phone,doctor_description from Doctor Where LOWER(doctor_lastname) LIKE %s;"
+        elif (filter == "firstname"):    
+            query = "select doctor_firstname,doctor_lastname,doctor_email,doctor_specialization,doctor_location,doctor_phone,doctor_description from Doctor Where LOWER(doctor_firstname) LIKE %s;"
+        else:
+            query = "select doctor_firstname,doctor_lastname,doctor_email,doctor_specialization,doctor_location,doctor_phone,doctor_description from Doctor;"
+        cursor.execute(query, (liketerm,))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
     def insert(self, doctor_firstname, doctor_lastname, doctor_email, doctor_password, doctor_specialization, doctor_location, doctor_phone):
         cursor = self.conn.cursor()
         query = "insert into Doctor(doctor_firstname, doctor_lastname, doctor_email, doctor_password, doctor_specialization, doctor_location, doctor_phone) values (%s, %s, %s, %s, %s, %s, %s, %s) ;"
