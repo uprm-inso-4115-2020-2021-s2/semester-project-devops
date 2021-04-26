@@ -24,7 +24,7 @@ class DoctorDAO:
         result = cursor.fetchone()
         return result
 
-    def getDoctorBySearch(self, term, filter):
+    def getDoctorBySearchFiltered(self, term, filter):
         liketerm = '%' + term + '%'
         cursor = self.conn.cursor()
         if (filter== "location"):
@@ -42,6 +42,31 @@ class DoctorDAO:
         for row in cursor:
             result.append(row)
         return result
+
+    def getDoctorBySearch(self, term):
+        liketerm = '%' + term + '%'
+        result = []
+        cursor = self.conn.cursor()
+        
+        query = "select doctor_firstname,doctor_lastname,doctor_email,doctor_specialization,doctor_location,doctor_phone,doctor_description from Doctor Where LOWER(doctor_location) LIKE %s;"
+        cursor.execute(query, (liketerm,))
+        for row in cursor:
+            result.append(row)
+        query = "select doctor_firstname,doctor_lastname,doctor_email,doctor_specialization,doctor_location,doctor_phone,doctor_description from Doctor Where LOWER(doctor_specialization) LIKE %s;"
+        cursor.execute(query, (liketerm,))
+        for row in cursor:
+            result.append(row)
+        query = "select doctor_firstname,doctor_lastname,doctor_email,doctor_specialization,doctor_location,doctor_phone,doctor_description from Doctor Where LOWER(doctor_lastname) LIKE %s;"
+        cursor.execute(query, (liketerm,))
+        for row in cursor:
+            result.append(row)
+        query = "select doctor_firstname,doctor_lastname,doctor_email,doctor_specialization,doctor_location,doctor_phone,doctor_description from Doctor Where LOWER(doctor_firstname) LIKE %s;"
+        cursor.execute(query, (liketerm,))
+        for row in cursor:
+            result.append(row)
+            
+        return result
+
 
     def insert(self, doctor_firstname, doctor_lastname, doctor_email, doctor_password, doctor_specialization, doctor_location, doctor_phone):
         cursor = self.conn.cursor()

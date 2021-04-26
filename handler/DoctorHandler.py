@@ -56,10 +56,23 @@ class DoctorHandler:
             doctors = self.build_doctor_dict(row)
             return jsonify(Doctors = doctors)
     
-    def getDoctorBySearch(self, term, filter):
+    def getDoctorBySearchFiltered(self, term, filter):
         processedTerm = util.Utilities().termProcessing(term)
         dao = DoctorDao.DoctorDAO()
-        doctor_list = dao.getDoctorBySearch(processedTerm.lower(), filter)
+        doctor_list = dao.getDoctorBySearchFiltered(processedTerm.lower(), filter)
+        result_list = []
+        if not doctor_list:
+            return jsonify(Error = "No doctors meet search criteria"), 404
+        else:
+            for row in doctor_list:
+                result = self.build_doctor_dict_public(row)
+                result_list.append(result)
+            return jsonify(Doctors = result_list)
+    
+    def getDoctorBySearch(self, term):
+        processedTerm = util.Utilities().termProcessing(term)
+        dao = DoctorDao.DoctorDAO()
+        doctor_list = dao.getDoctorBySearch(processedTerm.lower())
         result_list = []
         if not doctor_list:
             return jsonify(Error = "No doctors meet search criteria"), 404
