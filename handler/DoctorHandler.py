@@ -45,6 +45,17 @@ class DoctorHandler:
             doctors = self.build_doctor_dict(row)
             return jsonify(Doctors = doctors)
 
+    def getDoctorByEmailAndPass(self, json):
+        email = json['email']
+        password = json['password']
+        if email and password:
+            dao = DoctorDao.DoctorDAO()
+            row = dao.getDoctorByEmailAndPass(email, password)
+            if not row:
+                return jsonify(Error = "Doctor Not Found"), 404
+            return jsonify(Patient = "Doctor Found!"), 201
+        return jsonify(Error="Missing attributes in request"), 400
+
     def insertDoctorJson(self, json):
             doctor_firstname = json['FirstName']
             doctor_lastname = json['LastName']

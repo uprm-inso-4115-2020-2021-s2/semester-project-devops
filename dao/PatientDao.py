@@ -24,6 +24,13 @@ class PatientDAO:
         result = cursor.fetchone()
         return result
 
+    def getPatientByEmailAndPass(self, email, passw):
+        cursor = self.conn.cursor()
+        query = "select * from Patient Where patient_email = %s and patient_password = %s;"
+        cursor.execute(query, (email, passw))
+        result = cursor.fetchone()
+        return result
+
     def insert(self, patient_firstname, patient_lastname, patient_email, patient_password, patient_birthday, patient_gender, patient_medicalplan, patient_phone):
         cursor = self.conn.cursor()
         query = "insert into Patient(patient_firstname, patient_lastname, patient_email, patient_password, patient_birthday, patient_gender, patient_medicalplan, patient_phone) values (%s, %s, %s, %s, %s, %s, %s, %s) ;"

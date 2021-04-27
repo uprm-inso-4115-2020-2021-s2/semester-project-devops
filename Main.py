@@ -13,6 +13,16 @@ CORS(app)
 def greeting():
     return 'Hello, this is the DevOps App!!'
 
+@app.route('/login/patient', methods=['POST'])
+def loginpatient():
+    print("REQUEST: ", request.json)
+    return PatientHandler().getPatientByEmailAndPass(request.json)
+
+@app.route('/login/doctor', methods=['POST'])
+def logindoctor():
+    print("REQUEST: ", request.json)
+    return DoctorHandler().getDoctorByEmailAndPass(request.json)
+
 @app.route('/patients', methods=['GET', 'POST'])
 def patients():
     if request.method == 'POST':
