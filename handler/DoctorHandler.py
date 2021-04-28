@@ -93,6 +93,17 @@ class DoctorHandler:
             return jsonify(Patient = "Doctor Found!"), 201
         return jsonify(Error="Missing attributes in request"), 400
 
+    def getDoctorByFirstAndLastName(self, json):
+        firstname = json['FirstName']
+        lastname = json['LastName']
+        if firstname and lastname:
+            dao = DoctorDao.DoctorDAO()
+            row = dao.getDoctorByFirstAndLastName(firstname, lastname)
+            if not row:
+                return jsonify(Error = "Doctor Not Found"), 404
+            doctors = self.build_doctor_dict(row)
+        return jsonify(Doctors=doctors)
+
     def insertDoctorJson(self, json):
             doctor_firstname = json['FirstName']
             doctor_lastname = json['LastName']

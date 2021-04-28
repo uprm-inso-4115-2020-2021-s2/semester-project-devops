@@ -41,6 +41,11 @@ def doctors():
         if not request.args:
             return DoctorHandler().getAllDoctors()
 
+@app.route('/doctor/name', methods=['GET'])
+def doctorsbyname():
+        print("REQUEST: ", request.json)
+        return DoctorHandler().getDoctorByFirstAndLastName(request.json)
+
 @app.route('/appointment', methods=['GET', 'POST'])
 def appointment():
     if request.method == 'POST':

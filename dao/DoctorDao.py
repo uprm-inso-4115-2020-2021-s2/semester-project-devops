@@ -26,6 +26,13 @@ class DoctorDAO:
         result = cursor.fetchone()
         return result
 
+    def getDoctorByFirstAndLastName(self, firstname, lastname):
+        cursor = self.conn.cursor()
+        query = "select * from Doctor Where doctor_firstname = %s and doctor_lastname = %s;"
+        cursor.execute(query, (firstname, lastname,))
+        result = cursor.fetchone()
+        return result
+
     def getDoctorByEmailAndPass(self, email, passw):
         cursor = self.conn.cursor()
         query = "select * from Doctor Where doctor_email = %s and doctor_password = %s;"
