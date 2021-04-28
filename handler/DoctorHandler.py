@@ -86,7 +86,7 @@ class DoctorHandler:
         email = json['email']
         password = json['password']
         if email and password:
-            dao = DoctorDao.DoctorDAO()s
+            dao = DoctorDao.DoctorDAO()
             row = dao.getDoctorByEmailAndPass(email, password)
             if not row:
                 return jsonify(Error = "Doctor Not Found"), 404
