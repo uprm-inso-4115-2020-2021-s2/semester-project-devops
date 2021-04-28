@@ -4,8 +4,10 @@ import psycopg2
 class PatientDAO:
 
     def __init__(self):
-        connection_url = psycopg2.connect(host='database-inso.cm7e4m7oyhhe.us-east-2.rds.amazonaws.com',
-                                          user='backend', password='backend',dbname='postgres', port=5432)
+        connection_url = psycopg2.connect(host='ec2-23-22-191-232.compute-1.amazonaws.com',
+                                          user='aajrbzpsvjlsxu',
+                                          password='deef4d315910a15bc6984baf16464da8d0abcea63083e7ec854bb2bb1bef26f2',
+                                          dbname='d17d97tk4gskm8', port=5432)
         self.conn = connection_url
 
     def getAllPatients(self):
