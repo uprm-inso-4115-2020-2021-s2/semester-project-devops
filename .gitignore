@@ -1,0 +1,5 @@
+.vscode
+.idea
+config/
+**/__pycache__/
+**/__init__.py
