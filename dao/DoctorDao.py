@@ -85,15 +85,23 @@ class DoctorDAO:
 
         return result
 
-    def insert(self, doctor_firstname, doctor_lastname, doctor_email, doctor_password, doctor_specialization, doctor_location, doctor_phone):
+    def getNewDoctorId(self):
         cursor = self.conn.cursor()
-        query = "insert into Doctor(doctor_firstname, doctor_lastname, doctor_email, doctor_password, doctor_specialization, doctor_location, doctor_phone) values (%s, %s, %s, %s, %s, %s, %s, %s) ;"
-        cursor.execute(query, (doctor_firstname, doctor_lastname, doctor_email, doctor_password, doctor_specialization, doctor_location, doctor_phone))
-        #query = "SELECT LAST_INSERT_ID();"
-        #cursor.execute(query)
-        userid = cursor.fetchall()[0]
+        query = "SELECT doctor_id from Doctor order by doctor_id desc limit 1;"
+        cursor.execute(query)
+        result = cursor.fetchone()
+        if result==None:
+            return 1
+        newId = result[0]
+        return newId+1
+
+    def insert(self, doctor_firstname, doctor_lastname, doctor_email, doctor_password, doctor_specialization, doctor_location, doctor_phone, doctor_description, doctor_licence):
+        cursor = self.conn.cursor()
+        doctor_id = self.getNewDoctorId()
+        query = "insert into Doctor (doctor_id, doctor_firstname, doctor_lastname, doctor_email, doctor_password, doctor_specialization, doctor_location, doctor_phone, doctor_description, doctor_licence) values (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s) ;"
+        cursor.execute(query, (doctor_id, doctor_firstname, doctor_lastname, doctor_email, doctor_password, doctor_specialization, doctor_location, doctor_phone, doctor_description, doctor_licence,))
         self.conn.commit()
-        return userid
+        return doctor_id
 
     def delete(self, doctor_id):
         cursor = self.conn.cursor()
@@ -102,9 +110,9 @@ class DoctorDAO:
         self.conn.commit()
         return doctor_id
 
-    def update(self, doctor_id, doctor_firstname, doctor_lastname, doctor_email, doctor_password, doctor_specialization, doctor_location, doctor_phone):
+    def update(self, doctor_id, doctor_firstname, doctor_lastname, doctor_email, doctor_password, doctor_specialization, doctor_location, doctor_phone, doctor_description, doctor_licence):
         cursor = self.conn.cursor()
-        query = "update Doctor set doctor_firstname = %s, doctor_lastname = %s, doctor_email = %s, doctor_password = %s, doctor_specializationl = %s, doctor_location = %s, doctor_phone = %s where doctor_id = %s;"
-        cursor.execute(query, (doctor_firstname, doctor_lastname, doctor_email, doctor_password, doctor_specialization, doctor_location, doctor_phone, doctor_id,))
+        query = "update Doctor set doctor_firstname = %s, doctor_lastname = %s, doctor_email = %s, doctor_password = %s, doctor_specializationl = %s, doctor_location = %s, doctor_phone = %s, doctor_description = %s, doctor_licence = %s where doctor_id = %s;"
+        cursor.execute(query, (doctor_firstname, doctor_lastname, doctor_email, doctor_password, doctor_specialization, doctor_location, doctor_phone, doctor_description, doctor_licence, doctor_id,))
         self.conn.commit()
         return doctor_id

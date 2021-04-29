@@ -26,7 +26,7 @@ class DoctorHandler:
         result['doctor_description'] = row[6]
         return result
 
-    def build_doctor_attributes(self, doctor_id, doctor_firstname, doctor_lastname, doctor_email, doctor_password, doctor_specialization, doctor_location, doctor_phone):
+    def build_doctor_attributes(self, doctor_id, doctor_firstname, doctor_lastname, doctor_email, doctor_password, doctor_specialization, doctor_location, doctor_phone, doctor_description, doctor_licence):
         result = {}
         result['doctor_id'] = doctor_id
         result['doctor_firstname'] = doctor_firstname
@@ -36,6 +36,8 @@ class DoctorHandler:
         result['doctor_specialization'] = doctor_specialization
         result['doctor_location'] = doctor_location
         result['doctor_phone'] = doctor_phone
+        result['description'] = doctor_description
+        result['licence'] = doctor_licence
         return result
 
     def getAllDoctors(self):
@@ -105,6 +107,7 @@ class DoctorHandler:
         return jsonify(Doctors=doctors)
 
     def insertDoctorJson(self, json):
+            print(json)
             doctor_firstname = json['FirstName']
             doctor_lastname = json['LastName']
             doctor_email = json['Email']
@@ -112,10 +115,12 @@ class DoctorHandler:
             doctor_specialization = json['Specialization']
             doctor_location = json['Location']
             doctor_phone = json['Phone']
-            if doctor_firstname and doctor_lastname and doctor_email and doctor_password and doctor_specialization and doctor_location and doctor_phone:
+            doctor_description = json['Description']
+            doctor_licence = json['Licence']
+            if doctor_firstname and doctor_lastname and doctor_email and doctor_password and doctor_specialization and doctor_location and doctor_phone and doctor_description and doctor_licence:
                 dao = DoctorDao.DoctorDAO()
-                doctor_id = dao.insert(doctor_firstname, doctor_lastname, doctor_email, doctor_password, doctor_specialization, doctor_location, doctor_phone)
-                result = self.build_doctor_attributes(doctor_id, doctor_firstname, doctor_lastname, doctor_email, doctor_password, doctor_specialization, doctor_location, doctor_phone)
+                doctor_id = dao.insert(doctor_firstname, doctor_lastname, doctor_email, doctor_password, doctor_specialization, doctor_location, doctor_phone,doctor_description, doctor_licence)
+                result = self.build_doctor_attributes(doctor_id, doctor_firstname, doctor_lastname, doctor_email, doctor_password, doctor_specialization, doctor_location, doctor_phone, doctor_description, doctor_licence)
                 return jsonify(Doctor=result), 201
             else:
                 return jsonify(Error="Unexpected attributes in post request"), 400
@@ -140,7 +145,9 @@ class DoctorHandler:
             doctor_specialization = json['Specialization']
             doctor_location = json['Location']
             doctor_phone = json['Phone']
-            if doctor_firstname and doctor_lastname and doctor_email and doctor_password and doctor_specialization and doctor_location and doctor_phone:
-                dao.update(doctor_id, doctor_firstname, doctor_lastname, doctor_email, doctor_password, doctor_specialization, doctor_location,  doctor_phone)
-                result = self.build_doctor_attributes(doctor_id, doctor_firstname, doctor_lastname, doctor_email, doctor_password, doctor_specialization, doctor_location, doctor_phone)
+            doctor_description = json['Description']
+            doctor_licence = json['Licence']
+            if doctor_firstname and doctor_lastname and doctor_email and doctor_password and doctor_specialization and doctor_location and doctor_phone and doctor_description and doctor_licence:
+                dao.update(doctor_id, doctor_firstname, doctor_lastname, doctor_email, doctor_password, doctor_specialization, doctor_location,  doctor_phone, doctor_description, doctor_licence)
+                result = self.build_doctor_attributes(doctor_id, doctor_firstname, doctor_lastname, doctor_email, doctor_password, doctor_specialization, doctor_location, doctor_phone, doctor_description, doctor_licence)
                 return jsonify(Doctor=result), 200
