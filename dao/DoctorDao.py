@@ -109,7 +109,7 @@ class DoctorDAO:
 
     def update(self, doctor_id, doctor_firstname, doctor_lastname, doctor_email, doctor_password, doctor_specialization, doctor_location, doctor_phone, doctor_description, doctor_licence):
         cursor = self.conn.cursor()
-        query = "update Doctor set doctor_firstname = %s, doctor_lastname = %s, doctor_email = %s, doctor_password = %s, doctor_specializationl = %s, doctor_location = %s, doctor_phone = %s, doctor_description = %s, doctor_licence = %s where doctor_id = %s;"
+        query = "update Doctor set doctor_firstname = %s, doctor_lastname = %s, doctor_email = %s, doctor_password = %s, doctor_specialization = %s, doctor_location = %s, doctor_phone = %s, doctor_description = %s, doctor_licence = %s where doctor_id = %s;"
         cursor.execute(query, (doctor_firstname, doctor_lastname, doctor_email, doctor_password, doctor_specialization, doctor_location, doctor_phone, doctor_description, doctor_licence, doctor_id,))
         self.conn.commit()
         return doctor_id

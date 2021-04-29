@@ -93,7 +93,7 @@ class PatientHandler:
             patient_email = json['Email']
             patient_password = json['Password']
             patient_birthday = json['Birthday']
-            patient_gender = json['Gander']
+            patient_gender = json['Gender']
             patient_medicalplan = json['MedicalPlan']
             patient_phone = json['Phone']
             if patient_firstname and patient_lastname and patient_email and patient_password and patient_birthday and patient_gender and patient_medicalplan and patient_phone:

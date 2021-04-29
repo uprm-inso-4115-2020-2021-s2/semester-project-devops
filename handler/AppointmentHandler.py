@@ -38,8 +38,8 @@ class AppointmentHandler:
             return jsonify(Appointments = appointments)
 
     def insertAppointmentJson(self, json):
-            doctor_id = json['FirstName']
-            patient_id = json['LastName']
+            doctor_id = json['DoctorId']
+            patient_id = json['PatientId']
             appointment_date = json['AppointmentDate']
             if doctor_id and patient_id and appointment_date:
                 dao = AppointmentDao.AppointmentDAO()
@@ -62,8 +62,8 @@ class AppointmentHandler:
         if not dao.getAppointmentById(appointment_id):
             return jsonify(Error="Appointment not found."), 404
         else:
-            doctor_id = json['FirstName']
-            patient_id = json['LastName']
+            doctor_id = json['DoctorId']
+            patient_id = json['PatientId']
             appointment_date = json['AppointmentDate']
             if doctor_id and patient_id and appointment_date:
                 dao.update(appointment_id, doctor_id, patient_id, appointment_date)
