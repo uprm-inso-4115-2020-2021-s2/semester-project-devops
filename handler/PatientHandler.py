@@ -86,7 +86,7 @@ class PatientHandler:
     def updatePatientJson(self, patient_id, json):
         dao = PatientDao.PatientDAO()
         if not dao.getPatientById(patient_id):
-            return jsonify(Error="Admin not found."), 404
+            return jsonify(Error="Patient not found."), 404
         else:
             patient_firstname = json['FirstName']
             patient_lastname = json['LastName']

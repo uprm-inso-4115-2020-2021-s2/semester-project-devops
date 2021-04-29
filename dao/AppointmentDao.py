@@ -24,15 +24,20 @@ class AppointmentDAO:
         result = cursor.fetchone()
         return result
 
+    def getAppointmentId(self, doctor_id, patient_id, appointment_date):
+        cursor = self.conn.cursor()
+        query = "SELECT appointment_id from Appointment WHERE doctor_id = %s and patient_id = %s and appointment_date = %s;"
+        cursor.execute(query,(doctor_id, patient_id, appointment_date,))
+        result = cursor.fetchone()
+        return result
+
     def insert(self, doctor_id, patient_id, appointment_date):
         cursor = self.conn.cursor()
-        query = "insert into Appointment(doctor_id, patient_id, appointment_date) values (%s, %s, %s, %s, %s, %s, %s, %s) ;"
+        query = "insert into Appointment(doctor_id, patient_id, appointment_date) values (%s, %s, %s) ;"
         cursor.execute(query, (doctor_id, patient_id, appointment_date))
-        #query = "SELECT LAST_INSERT_ID();"
-        #cursor.execute(query)
-        userid = cursor.fetchall()[0]
+        appointment_id = self.getAppointmentId()
         self.conn.commit()
-        return userid
+        return appointment_id
 
     def delete(self, appointment_id):
         cursor = self.conn.cursor()

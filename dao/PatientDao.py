@@ -33,15 +33,21 @@ class PatientDAO:
         result = cursor.fetchone()
         return result
 
+    def getPatientId(self, patient_firstname, patient_lastname, patient_email):
+        cursor = self.conn.cursor()
+        query = "SELECT patient_id from Patient WHERE patient_firstname = %s and patient_lastname = %s and patient_email = %s;"
+        cursor.execute(query,(patient_firstname, patient_lastname, patient_email,))
+        result = cursor.fetchone()
+        return result
+
+
     def insert(self, patient_firstname, patient_lastname, patient_email, patient_password, patient_birthday, patient_gender, patient_medicalplan, patient_phone):
         cursor = self.conn.cursor()
         query = "insert into Patient(patient_firstname, patient_lastname, patient_email, patient_password, patient_birthday, patient_gender, patient_medicalplan, patient_phone) values (%s, %s, %s, %s, %s, %s, %s, %s) ;"
         cursor.execute(query, (patient_firstname, patient_lastname, patient_email, patient_password, patient_birthday, patient_gender, patient_medicalplan, patient_phone))
-        #query = "SELECT LAST_INSERT_ID();"
-        #cursor.execute(query)
-        userid = cursor.fetchall()[0]
+        patient_id = self.getPatientId(patient_firstname, patient_lastname, patient_email)
         self.conn.commit()
-        return userid
+        return patient_id
 
     def delete(self, patient_id):
         cursor = self.conn.cursor()
@@ -52,7 +58,7 @@ class PatientDAO:
 
     def update(self, patient_id, patient_firstname, patient_lastname, patient_email, patient_password, patient_birthday, patient_gender, patient_medicalplan, patient_phone):
         cursor = self.conn.cursor()
-        query = "update Patient set patient_firstname = %s, patient_lastname = %s, patient_email = %s, patient_password = %s, patient_birthdayl = %s, patient_gender = %s, patient_meidcalplan = %s, patient_phone = %s where patient_id = %s;"
+        query = "update Patient set patient_firstname = %s, patient_lastname = %s, patient_email = %s, patient_password = %s, patient_birthday = %s, patient_gender = %s, patient_medicalplan = %s, patient_phone = %s where patient_id = %s;"
         cursor.execute(query, (patient_firstname, patient_lastname, patient_email, patient_password, patient_birthday, patient_gender, patient_medicalplan, patient_phone, patient_id,))
         self.conn.commit()
         return patient_id

@@ -85,21 +85,18 @@ class DoctorDAO:
 
         return result
 
-    def getNewDoctorId(self):
+    def getDoctorId(self, doctor_firstname, doctor_lastname, doctor_email):
         cursor = self.conn.cursor()
-        query = "SELECT doctor_id from Doctor order by doctor_id desc limit 1;"
-        cursor.execute(query)
+        query = "SELECT doctor_id from Doctor WHERE doctor_firstname = %s and doctor_lastname = %s and doctor_email = %s;"
+        cursor.execute(query, (doctor_firstname, doctor_lastname, doctor_email,))
         result = cursor.fetchone()
-        if result==None:
-            return 1
-        newId = result[0]
-        return newId+1
+        return result
 
     def insert(self, doctor_firstname, doctor_lastname, doctor_email, doctor_password, doctor_specialization, doctor_location, doctor_phone, doctor_description, doctor_licence):
         cursor = self.conn.cursor()
-        doctor_id = self.getNewDoctorId()
-        query = "insert into Doctor (doctor_id, doctor_firstname, doctor_lastname, doctor_email, doctor_password, doctor_specialization, doctor_location, doctor_phone, doctor_description, doctor_licence) values (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s) ;"
-        cursor.execute(query, (doctor_id, doctor_firstname, doctor_lastname, doctor_email, doctor_password, doctor_specialization, doctor_location, doctor_phone, doctor_description, doctor_licence,))
+        query = "insert into Doctor (doctor_firstname, doctor_lastname, doctor_email, doctor_password, doctor_specialization, doctor_location, doctor_phone, doctor_description, doctor_licence) values (%s, %s, %s, %s, %s, %s, %s, %s, %s) ;"
+        cursor.execute(query, (doctor_firstname, doctor_lastname, doctor_email, doctor_password, doctor_specialization, doctor_location, doctor_phone, doctor_description, doctor_licence,))
+        doctor_id = self.getDoctorId(doctor_firstname, doctor_lastname, doctor_email)
         self.conn.commit()
         return doctor_id
 

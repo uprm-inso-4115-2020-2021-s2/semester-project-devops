@@ -23,7 +23,7 @@ def logindoctor():
     print("REQUEST: ", request.json)
     return DoctorHandler().getDoctorByEmailAndPass(request.json)
 
-@app.route('/patients', methods=['GET', 'POST'])
+@app.route('/patients', methods=['GET', 'POST', 'PUT'])
 def patients():
     if request.method == 'POST':
         print("REQUEST: ", request.json)
@@ -32,7 +32,13 @@ def patients():
         if not request.args:
             return PatientHandler().getAllPatients()
 
-@app.route('/doctors', methods=['GET', 'POST'])
+@app.route('/patient/update/<int:patientid>', methods=['PUT'])
+def updatepatient(patientid):
+    if request.method == 'PUT':
+        print("REQUEST: ", request.json)
+        return PatientHandler().updatePatientJson(patientid, request.json)
+
+@app.route('/doctors', methods=['GET', 'POST', 'PUT'])
 def doctors():
     if request.method == 'POST':
         print("REQUEST: ", request.json)
@@ -41,12 +47,18 @@ def doctors():
         if not request.args:
             return DoctorHandler().getAllDoctors()
 
+@app.route('/doctor/update/<int:doctorid>', methods=['PUT'])
+def updatedoctor(doctorid):
+    if request.method == 'PUT':
+        print("REQUEST: ", request.json)
+        return DoctorHandler().updateDoctorJson(doctorid, request.json)
+
 @app.route('/doctor/name', methods=['GET'])
 def doctorsbyname():
         print("REQUEST: ", request.json)
         return DoctorHandler().getDoctorByFirstAndLastName(request.json)
 
-@app.route('/appointment', methods=['GET', 'POST'])
+@app.route('/appointment', methods=['GET', 'POST', 'PUT'])
 def appointment():
     if request.method == 'POST':
         print("REQUEST: ", request.json)
@@ -55,6 +67,11 @@ def appointment():
         if not request.args:
             return AppointmentHandler().getAllAppointments()
 
+@app.route('/appointment/update/<int:appointmentid>', methods=['PUT'])
+def updateappointment(appointmentid):
+    if request.method == 'PUT':
+        print("REQUEST: ", request.json)
+        return AppointmentHandler().updateAppointmentJson(appointmentid, request.json)
 
 @app.route('/search/<string:filter>/<string:term>', methods=['GET'])
 def doctorSearchFiltered(term, filter):

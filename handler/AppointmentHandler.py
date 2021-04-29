@@ -60,7 +60,7 @@ class AppointmentHandler:
     def updateAppointmentJson(self, appointment_id, json):
         dao = AppointmentDao.AppointmentDAO()
         if not dao.getAppointmentById(appointment_id):
-            return jsonify(Error="Admin not found."), 404
+            return jsonify(Error="Appointment not found."), 404
         else:
             doctor_id = json['FirstName']
             patient_id = json['LastName']
